@@ -23,7 +23,8 @@ if 'oyun_turu' not in st.session_state:
     st.session_state.oyun_turu = "" 
 if 'calisma_turu' not in st.session_state:
     st.session_state.calisma_turu = ""
-
+if 'zorluk' not in st.session_state:
+    st.session_state.zorluk = "Kolay"
 # --- Fonksiyonlar ---
 def yeni_soru_olustur():
     st.session_state.mesaj = ""
@@ -114,7 +115,10 @@ if st.session_state.sayfa == 'menu':
     
     st.session_state.isim = st.text_input("İsminiz:", value=st.session_state.isim)
     st.session_state.hak = st.selectbox("Hak Sayısı (Can):", [3, 5, 10])
-    
+    st.session_state.zorluk = st.selectbox(
+    "Zorluk Seviyesi:",
+    ["Kolay", "Orta", "Zor"]
+)
     st.write("---")
     st.write("Profil Fotoğrafı (İsteğe Bağlı):")
     img = st.camera_input("Kamerayı Aç")
@@ -240,4 +244,5 @@ elif st.session_state.sayfa == 'hakkinda':
 st.markdown("---")
 
 st.caption("**Yapımcı: Ege Kağan Köse**")
+
 
