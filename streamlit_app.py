@@ -30,13 +30,19 @@ def yeni_soru_olustur():
     st.session_state.mesaj = ""
     
     if st.session_state.oyun_turu == 'matematik':
+                if st.session_state.zorluk == "Kolay":
+            alt, ust = 1, 10
+        elif st.session_state.zorluk == "Orta":
+            alt, ust = 10, 50
+        else:
+            alt, ust = 50, 100
         islem = random.randint(1, 4)
         if islem == 1: # Toplama
-            s1, s2 = random.randint(10, 50), random.randint(10, 50)
+            s1, s2 = random.randint(alt, ust), random.randint(alt, ust)
             st.session_state.soru_metni = f"{s1} + {s2} = ?"
             st.session_state.dogru_cevap = s1 + s2
         elif islem == 2: # Çıkarma
-            s1 = random.randint(20, 60)
+            s1 = random.randint(alt, ust)
             s2 = random.randint(1, s1)
             st.session_state.soru_metni = f"{s1} - {s2} = ?"
             st.session_state.dogru_cevap = s1 - s2
@@ -244,5 +250,6 @@ elif st.session_state.sayfa == 'hakkinda':
 st.markdown("---")
 
 st.caption("**Yapımcı: Ege Kağan Köse**")
+
 
 
