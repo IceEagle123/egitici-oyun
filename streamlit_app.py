@@ -86,7 +86,7 @@ def cevap_kontrol():
         yeni_soru_olustur()
     else:
         st.session_state.hak -= 1
-        st.session_state.mesaj = "❌ Yanlış oldu!"
+        st.session_state.mesaj = "❌ Yanlış! Doğru cevap: {st.session_state.dogru_cevap}"
         if st.session_state.hak <= 0:
             st.session_state.mesaj = "💀 Oyun Bitti!"
 
@@ -238,4 +238,5 @@ elif st.session_state.sayfa == 'hakkinda':
 
 # Alt Bilgi
 st.markdown("---")
+
 st.caption("**Yapımcı: Ege Kağan Köse**")
