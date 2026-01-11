@@ -21,6 +21,8 @@ if 'mesaj' not in st.session_state:
     st.session_state.mesaj = ""
 if 'oyun_turu' not in st.session_state:
     st.session_state.oyun_turu = "" 
+if 'calisma_turu' not in st.session_state:
+    st.session_state.calisma_turu = ""
 
 # --- Fonksiyonlar ---
 def yeni_soru_olustur():
@@ -98,6 +100,13 @@ def oyunu_baslat(tur):
 def ana_menu():
     st.session_state.sayfa = 'menu'
 
+def calisma_baslat(tur):
+    st.session_state.calisma_turu = tur
+    st.session_state.sayfa = 'calisma'
+
+def hakkinda_ac():
+    st.session_state.sayfa = 'hakkinda'
+
 # --- Arayüz Tasarımı ---
 
 if st.session_state.sayfa == 'menu':
@@ -116,9 +125,17 @@ if st.session_state.sayfa == 'menu':
     with col1:
         if st.button("MATEMATİK OYUNU ➕", use_container_width=True):
             oyunu_baslat('matematik')
+        if st.button("ÇARPIM TABLOSU 🔢", use_container_width=True):
+            calisma_baslat('matematik')
     with col2:
         if st.button("TÜRKÇE OYUNU 📚", use_container_width=True):
             oyunu_baslat('turkce')
+        if st.button("KELİME LİSTESİ 📖", use_container_width=True):
+            calisma_baslat('turkce')
+            
+    st.write("")
+    if st.button("HAKKINDA ℹ️", use_container_width=True):
+        hakkinda_ac()
 
 elif st.session_state.sayfa == 'oyun':
     # Üst Bilgi Çubuğu
@@ -157,6 +174,64 @@ elif st.session_state.sayfa == 'oyun':
             st.rerun()
 
     st.markdown("---")
+    if st.button("🔙 Ana Menüye Dön"):
+        ana_menu()
+        st.rerun()
+
+elif st.session_state.sayfa == 'calisma':
+    if st.session_state.calisma_turu == 'matematik':
+        st.header("Çarpım Tablosu 🔢")
+        st.info("Ezberlemek istediğin sayının üzerine tıkla!")
+        
+        # 1'den 10'a kadar olanlar için açılır kapanır liste
+        for i in range(1, 11):
+            with st.expander(f"{i}'ler Çarpım Tablosu"):
+                for j in range(1, 11):
+                    st.write(f"{i} x {j} = {i*j}")
+                    
+    elif st.session_state.calisma_turu == 'turkce':
+        st.header("Kelime Listesi 📖")
+        st.write("Eş ve Zıt anlamlı kelimeler:")
+        
+        # Kelime listesi verisi
+        kelimeler = [
+            ("Siyah", "Kara", "Eş"), ("Beyaz", "Ak", "Eş"), ("Kırmızı", "Al", "Eş"),
+            ("Okul", "Mektep", "Eş"), ("Doktor", "Hekim", "Eş"), ("Büyük", "Küçük", "Zıt"), 
+            ("Uzun", "Kısa", "Zıt"), ("Sıcak", "Soğuk", "Zıt"), ("Gel", "Git", "Zıt"),
+            ("Zengin", "Fakir", "Zıt"), ("Genç", "Yaşlı", "Zıt"), ("İyi", "Kötü", "Zıt")
+        ]
+        
+        # Tablo oluşturma (Markdown ile)
+        tablo = "| Kelime | Karşılığı | Türü |\n|---|---|---|\n"
+        for k, c, t in kelimeler:
+            tur_ikon = "🔄 Eş" if t == "Eş" else "↔️ Zıt"
+            tablo += f"| {k} | {c} | {tur_ikon} |\n"
+        
+        st.markdown(tablo)
+
+    st.markdown("---")
+    if st.button("🔙 Ana Menüye Dön"):
+        ana_menu()
+        st.rerun()
+
+elif st.session_state.sayfa == 'hakkinda':
+    st.header("Hakkında ℹ️")
+    st.info("Bu uygulama çocukların eğitimine katkı sağlamak amacıyla geliştirilmiştir.")
+    
+    st.write("""
+    **Özellikler:**
+    - ➕ **Matematik Oyunu:** Toplama, çıkarma, çarpma ve bölme işlemleri.
+    - 📚 **Türkçe Oyunu:** Eş ve zıt anlamlı kelimeler.
+    - 🔢 **Çarpım Tablosu:** Ezberlemek için interaktif tablo.
+    - 📖 **Kelime Listesi:** Çalışmak için kelime listesi.
+    """)
+    
+    st.write("---")
+    st.subheader("Yapımcı")
+    st.write("👨‍💻 **Ege Kağan Köse**")
+    st.write("📸 **Instagram:** [kose_egekagan](https://www.instagram.com/kose_egekagan)")
+    
+    st.write("---")
     if st.button("🔙 Ana Menüye Dön"):
         ana_menu()
         st.rerun()
