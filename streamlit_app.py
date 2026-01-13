@@ -231,10 +231,11 @@ def cevap_kontrol(girdi):
         st.session_state.log.append(
             f"[{zaman_damgasi()}] DOĞRU: {st.session_state.soru}"
         )
-        yeni_soru(def yeni_soru():
+        def yeni_soru():
     st.session_state.baslangic = time.time()
     st.session_state.mesaj = ""
     st.session_state.soru_no += 1
+    
 
     if st.session_state.oyun_turu == "matematik":
         s, c = openai_soru_uret("Matematik", st.session_state.zorluk)
