@@ -9,6 +9,69 @@ import random
 import time
 import unicodedata
 from datetime import datetime
+# ============================================================
+# AI BENZERİ AKILLI SORU ÜRETİMİ
+# ============================================================
+
+def ai_matematik_soru(zorluk):
+    """
+    AI mantığıyla matematik sorusu üretir
+    """
+    if zorluk == "Kolay":
+        aralik = (1, 10)
+        islemler = ["+", "-"]
+    elif zorluk == "Orta":
+        aralik = (5, 30)
+        islemler = ["+", "-", "x"]
+    else:  # Zor
+        aralik = (10, 100)
+        islemler = ["+", "-", "x", "÷"]
+
+    a = random.randint(*aralik)
+    b = random.randint(*aralik)
+    islem = random.choice(islemler)
+
+    if islem == "+":
+        return f"{a} + {b} = ?", a + b
+
+    if islem == "-":
+        if b > a:
+            a, b = b, a
+        return f"{a} - {b} = ?", a - b
+
+    if islem == "x":
+        return f"{a} × {b} = ?", a * b
+
+    # Bölme (tam bölünecek şekilde)
+    b = random.randint(2, 10)
+    c = random.randint(2, 10)
+    return f"{b*c} ÷ {b} = ?", c
+
+
+def ai_turkce_soru(zorluk):
+    """
+    AI mantığıyla Türkçe soru üretir
+    """
+    kolay = [
+        ("Siyah", "Kara"),
+        ("Beyaz", "Ak"),
+        ("İyi", "Kötü")
+    ]
+    orta = [
+        ("Doktor", "Hekim"),
+        ("Büyük", "Küçük"),
+        ("Uzun", "Kısa")
+    ]
+    zor = [
+        ("Cesur", "Korkak"),
+        ("Zengin", "Fakir"),
+        ("Genç", "Yaşlı")
+    ]
+
+    havuz = kolay if zorluk == "Kolay" else orta if zorluk == "Orta" else zor
+    kelime, cevap = random.choice(havuz)
+
+    return f"'{kelime}' kelimesinin anlamını yaz:", cevap
 
 # ============================================================
 # SAYFA AYARLARI
