@@ -3,12 +3,35 @@
 # Yapımcı: Ege Kağan Köse
 # Streamlit | Python
 # ============================================================
-
+OPENAI_API_KEY="sk-xxxxxxxx"
 import streamlit as st
+from openai import OpenAI
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 import random
 import time
 import unicodedata
 from datetime import datetime
+def openai_soru_uret(ders, zorluk):
+    prompt = f"""
+    {ders} dersi için {zorluk} seviyesinde,
+    tek cevaplı, kısa bir soru üret.
+    Sadece soru ve cevabı JSON olarak döndür.
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    icerik = response.choices[0].message.content
+
+    try:
+        data = eval(icerik)
+        return data["soru"], data["cevap"]
+    except:
+        return "2 + 2 = ?", 4
 # ============================================================
 # AI BENZERİ AKILLI SORU ÜRETİMİ
 # ============================================================
@@ -208,7 +231,18 @@ def cevap_kontrol(girdi):
         st.session_state.log.append(
             f"[{zaman_damgasi()}] DOĞRU: {st.session_state.soru}"
         )
-        yeni_soru()
+        yeni_soru(def yeni_soru():
+    st.session_state.baslangic = time.time()
+    st.session_state.mesaj = ""
+    st.session_state.soru_no += 1
+
+    if st.session_state.oyun_turu == "matematik":
+        s, c = openai_soru_uret("Matematik", st.session_state.zorluk)
+    else:
+        s, c = openai_soru_uret("Türkçe", st.session_state.zorluk)
+
+    st.session_state.soru = s
+    st.session_state.dogru_cevap = c)
     else:
         st.session_state.hak -= 1
         st.session_state.yanlis += 1
