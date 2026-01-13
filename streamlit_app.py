@@ -243,7 +243,7 @@ def cevap_kontrol(girdi):
         s, c = openai_soru_uret("Türkçe", st.session_state.zorluk)
 
     st.session_state.soru = s
-    st.session_state.dogru_cevap = c)
+    st.session_state.dogru_cevap = c
     else:
         st.session_state.hak -= 1
         st.session_state.yanlis += 1
