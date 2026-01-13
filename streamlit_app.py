@@ -196,18 +196,7 @@ def turkce_soru():
     k, c, t = random.choice(kelimeler)
     return f"'{k}' kelimesinin {t.upper()} anlamlısı nedir?", c
 
-def yeni_soru():
-    st.session_state.baslangic = time.time()
-    st.session_state.mesaj = ""
-    st.session_state.soru_no += 1
 
-    if st.session_state.oyun_turu == "matematik":
-        s, c = matematik_soru()
-    else:
-        s, c = turkce_soru()
-
-    st.session_state.soru = s
-    st.session_state.dogru_cevap = c
 
 # ============================================================
 # CEVAP KONTROL
@@ -417,3 +406,15 @@ elif st.session_state.sayfa == "hakkinda":
 
 st.divider()
 st.caption("© 2026 | Eğitici Oyun Ultra | Ege Kağan Köse")
+def yeni_soru():
+    st.session_state.baslangic = time.time()
+    st.session_state.mesaj = ""
+    st.session_state.soru_no += 1
+
+    if st.session_state.get("oyun_turu") == "matematik":
+        s, c = openai_soru_uret("Matematik", st.session_state.get("zorluk", "orta"))
+    else:
+        s, c = openai_soru_uret("Türkçe", st.session_state.get("zorluk", "orta"))
+
+    st.session_state.soru = s
+    st.session_state.dogru_cevap = c
