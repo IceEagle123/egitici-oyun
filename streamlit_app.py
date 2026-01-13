@@ -235,7 +235,6 @@ def cevap_kontrol(girdi):
     st.session_state.baslangic = time.time()
     st.session_state.mesaj = ""
     st.session_state.soru_no += 1
-    
 
     if st.session_state.oyun_turu == "matematik":
         s, c = openai_soru_uret("Matematik", st.session_state.zorluk)
